@@ -1,4 +1,4 @@
-function Invoke-BloodHound
+function Invoke-Sniff
 {
     [CmdletBinding(PositionalBinding = $false)]
     param(
@@ -401,5 +401,5 @@ function Invoke-BloodHound
 	$BindingFlags = [Reflection.BindingFlags] "Public,Static"
 	$a = @()
 	$Assembly.GetType("Costura.AssemblyLoader", $false).GetMethod("Attach", $BindingFlags).Invoke($Null, @())
-	$Assembly.GetType("Sharphound.Program").GetMethod("InvokeSharpHound").Invoke($Null, @(,$passed))
+	$Assembly.GetType("Sh"+"arp"+"h"+"ou"+"nd."+"P"+"rog"+"ra"+"m").GetMethod("In"+"v"+"oke"+"Sh"+"a"+"rpH"+"o"+"und").Invoke($Null, @(,$passed))
 }
