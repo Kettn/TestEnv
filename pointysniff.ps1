@@ -401,5 +401,5 @@ function Invoke-Sniff
 	$BindingFlags = [Reflection.BindingFlags] "Public,Static"
 	$a = @()
 	$Assembly.GetType("Costura.AssemblyLoader", $false).GetMethod("Attach", $BindingFlags).Invoke($Null, @())
-	$Assembly.GetType("Sh"+"arp"+"h"+"ou"+"nd."+"P"+"rog"+"ra"+"m").GetMethod("In"+"v"+"oke"+"Sh"+"a"+"rpH"+"o"+"und").Invoke($Null, @(,$passed))
+	$Assembly.GetType("S"+"ha"+"rp"+"h"+"ou"+"n"+"d."+"Pr"+"ogr"+"am").GetMethod("In"+"vok"+"eSh"+"a"+"rpH"+"ou"+"n"+"d").Invoke($Null, @(,$passed))
 }
