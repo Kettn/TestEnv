@@ -291,7 +291,7 @@ function Get-Domain {
     PROCESS {
         if ($PSBoundParameters['Credential']) {
 
-            Write-Verbose 'get alternative with your thinking'
+            Write-Verbose "get alternative with your thinking"
 
             if ($PSBoundParameters['Domain']) {
                 $TargetDomain = $Domain
@@ -421,7 +421,7 @@ function Get-DomainSPNTicket {
                     $CipherText = $Matches.DataToEnd.Substring(0,$CipherTextLen*2)
 
                     if($Matches.DataToEnd.Substring($CipherTextLen*2, 4) -ne 'A482') {
-                        Write-Warning 'dedlol"'
+                        Write-Warning "dedlol"
                         $Hash = $null
                         $Out | Add-Member Noteproperty 'TicketByteHexStream' ([Bitconverter]::ToString($TicketByteStream).Replace('-',''))
                     } else {
@@ -618,27 +618,27 @@ function Get-DomainUser {
             }
 
             if ($PSBoundParameters['SPN']) {
-                Write-Verbose 'winning again again again'
+                Write-Verbose "winning again again again"
                 $Filter += '(servicePrincipalName=*)'
             }
             if ($PSBoundParameters['AllowDelegation']) {
-                Write-Verbose 'looking for stuff'
+                Write-Verbose "looking for stuff"
                 $Filter += '(!(userAccountControl:1.2.840.113556.1.4.803:=1048574))'
             }
             if ($PSBoundParameters['DisallowDelegation']) {
-                Write-Verbose 'looking for other stuff
+                Write-Verbose "looking for other stuff"
                 $Filter += '(userAccountControl:1.2.840.113556.1.4.803:=1048574)'
             }
             if ($PSBoundParameters['AdminCount']) {
-                Write-Verbose 'looking for cool stuff'
+                Write-Verbose "looking for cool stuff"
                 $Filter += '(admincount=1)'
             }
             if ($PSBoundParameters['TrustedToAuth']) {
-                Write-Verbose 'looking for even cooler stuff'
+                Write-Verbose "looking for even cooler stuff"
                 $Filter += '(msds-allowedtodelegateto=*)'
             }
             if ($PSBoundParameters['PreauthNotRequired']) {
-                Write-Verbose 'gosh looking for things is boring'
+                Write-Verbose "gosh looking for things is boring"
                 $Filter += '(userAccountControl:1.2.840.113556.1.4.803:=4194304)'
             }
             if ($PSBoundParameters['LDAPFilter']) {
