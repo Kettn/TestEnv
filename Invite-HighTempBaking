@@ -687,7 +687,7 @@ function Get-DomainUser {
 }
 
 
-function Invite-HighTempBaking {
+function Invoke-HighTempBaking {
 
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [OutputType('SuperLook.SPNTicket')]
