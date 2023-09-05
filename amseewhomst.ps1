@@ -1,11 +1,3 @@
-#Oh! I have slipped the surly bonds of Earth
-#And danced the skies on laughter-silvered wings;
-#Sunward I've climbed, and joined the tumbling mirth
-#of sun-split clouds,—and done a hundred things
-#You have not dreamed of—wheeled and soared and swung
-#High in the sunlit silenc
-
-
 function ChirtenGland {
     Param ($BrighamCandy, $ConjureFotui)
 
@@ -23,7 +15,6 @@ function ChirtenGland {
 #
 #
 #
-# One of the defining works of the Harlem Renaissance, by its greatest poet. It also, of course, gave inspiration and lent a title to another literary classic: Lorraine Hansberry’s A Raisin in the Sun.
 function YuporKnit {
     Param (
         [Parameter(Position = 0, Mandatory = $True)] [Type[]] $CohogEarhole,
