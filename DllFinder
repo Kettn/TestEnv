@@ -1,0 +1,139 @@
+# DLL Yoinking
+
+function Find-ProcessDLLHijack {
+<#
+.SYNOPSIS
+
+Finds all DLL hijack locations for currently running processes.
+
+.DESCRIPTION
+
+Enumerates all currently running processes with Get-Process (or accepts an
+input process object from Get-Process) and enumerates the loaded modules for each.
+All loaded module name exists outside of the process binary base path, as those
+are DLL load-order hijack candidates.
+
+
+Find-ProcessDLLHijack -ExcludeOwned
+
+Finds possible hijackable DLL location for processes not owned by the
+current user.
+#>
+
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
+    [OutputType('PowerUp.HijackableDLL.Process')]
+    [CmdletBinding()]
+    Param(
+        [Parameter(Position = 0, ValueFromPipeline = $True, ValueFromPipelineByPropertyName = $True)]
+        [Alias('ProcessName')]
+        [String[]]
+        $Name = $(Get-Process | Select-Object -Expand Name),
+
+        [Switch]
+        $ExcludeWindows,
+
+        [Switch]
+        $ExcludeProgramFiles,
+
+        [Switch]
+        $ExcludeOwned
+    )
+
+    BEGIN {
+        $Keys = (Get-Item "HKLM:\System\CurrentControlSet\Control\Session Manager\KnownDLLs")
+        $KnownDLLs = $(ForEach ($KeyName in $Keys.GetValueNames()) { $Keys.GetValue($KeyName).tolower() }) | Where-Object { $_.EndsWith(".dll") }
+        $KnownDLLPaths = $(ForEach ($name in $Keys.GetValueNames()) { $Keys.GetValue($name).tolower() }) | Where-Object { -not $_.EndsWith(".dll") }
+        $KnownDLLs += ForEach ($path in $KnownDLLPaths) { ls -force $path\*.dll | Select-Object -ExpandProperty Name | ForEach-Object { $_.tolower() }}
+        $CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+
+        $Owners = @{}
+        Get-WmiObject -Class win32_process | Where-Object {$_} | ForEach-Object { $Owners[$_.handle] = $_.getowner().user }
+    }
+
+    PROCESS {
+
+        ForEach ($ProcessName in $Name) {
+
+            $TargetProcess = Get-Process -Name $ProcessName
+
+            if ($TargetProcess -and $TargetProcess.Path -and ($TargetProcess.Path -ne '') -and ($Null -ne $TargetProcess.Path)) {
+
+                try {
+                    $BasePath = $TargetProcess.Path | Split-Path -Parent
+                    $LoadedModules = $TargetProcess.Modules
+                    $ProcessOwner = $Owners[$TargetProcess.Id.ToString()]
+
+                    ForEach ($Module in $LoadedModules){
+
+                        $ModulePath = "$BasePath\$($Module.ModuleName)"
+
+                        # if the module path doesn't exist in the process base path folder
+                        if ((-not $ModulePath.Contains('C:\Windows\System32')) -and (-not (Test-Path -Path $ModulePath)) -and ($KnownDLLs -NotContains $Module.ModuleName)) {
+
+                            $Exclude = $False
+
+                            if ($PSBoundParameters['ExcludeWindows'] -and $ModulePath.Contains('C:\Windows')) {
+                                $Exclude = $True
+                            }
+
+                            if ($PSBoundParameters['ExcludeProgramFiles'] -and $ModulePath.Contains('C:\Program Files')) {
+                                $Exclude = $True
+                            }
+
+                            if ($PSBoundParameters['ExcludeOwned'] -and $CurrentUser.Contains($ProcessOwner)) {
+                                $Exclude = $True
+                            }
+
+                            # output the process name and hijackable path if exclusion wasn't marked
+                            if (-not $Exclude){
+                                $Out = New-Object PSObject
+                                $Out | Add-Member Noteproperty 'ProcessName' $TargetProcess.ProcessName
+                                $Out | Add-Member Noteproperty 'ProcessPath' $TargetProcess.Path
+                                $Out | Add-Member Noteproperty 'ProcessOwner' $ProcessOwner
+                                $Out | Add-Member Noteproperty 'ProcessHijackableDLL' $ModulePath
+                                $Out.PSObject.TypeNames.Insert(0, 'PowerUp.HijackableDLL.Process')
+                                $Out
+                            }
+                        }
+                    }
+                }
+                catch {
+                    Write-Verbose "Error: $_"
+                }
+            }
+        }
+    }
+}
+
+
+function Find-PathDLLHijack {
+<#
+.SYNOPSIS
+
+Finds all directories in the system %PATH% that are modifiable by the current user.
+
+.EXAMPLE
+
+Find-PathDLLHijack
+
+Finds all %PATH% .DLL hijacking opportunities.
+#>
+
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
+    [OutputType('PowerUp.HijackableDLL.Path')]
+    [CmdletBinding()]
+    Param()
+
+    Get-Item Env:Path | Select-Object -ExpandProperty Value | ForEach-Object { $_.split(';') } | Where-Object {$_ -and ($_ -ne '')} | ForEach-Object {
+        $TargetPath = $_
+        $ModifidablePaths = $TargetPath | Get-ModifiablePath -Literal | Where-Object {$_ -and ($Null -ne $_) -and ($Null -ne $_.ModifiablePath) -and ($_.ModifiablePath.Trim() -ne '')}
+        ForEach ($ModifidablePath in $ModifidablePaths) {
+            if ($Null -ne $ModifidablePath.ModifiablePath) {
+                $ModifidablePath | Add-Member Noteproperty '%PATH%' $_
+                $ModifidablePath | Add-Member Aliasproperty Name '%PATH%'
+                $ModifidablePath.PSObject.TypeNames.Insert(0, 'PowerUp.HijackableDLL.Path')
+                $ModifidablePath
+            }
+        }
+    }
+}
