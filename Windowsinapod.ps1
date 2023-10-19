@@ -1118,15 +1118,6 @@ $Drives.Root | ForEach-Object {
       }
       if ($path -like "*SiteList.xml") {
       }
-      $regexSearch.keys | ForEach-Object {
-        $passwordFound = Get-Content $path.FullName -ErrorAction SilentlyContinue -Force | Select-String $regexSearch[$_] -Context 1, 1
-        if ($passwordFound) {
-          Write-Host "We may have located something we shouldnt have: $_" -ForegroundColor Yellow
-          Write-Host $Path.FullName
-          Write-Host -ForegroundColor Blue "$_ pewpew"
-          Write-Host $passwordFound -ForegroundColor Red
-        }
-      }
     }  
   }
 }
