@@ -331,17 +331,7 @@ if($FullCheck){
   Write-Host "**Full Check Enabled. This will significantly increase false positives in registry / folder check for Usernames / Passwords.**"
 }
   
-Write-Host -BackgroundColor Red -ForegroundColor White  "ADVISORY: WinPEAS - Windows local Privilege Escalation Awesome Script"
-Write-Host -BackgroundColor Red -ForegroundColor White "WinPEAS should be used for authorized penetration testing and/or educational purposes only"
-Write-Host -BackgroundColor Red -ForegroundColor White "Any misuse of this software will not be the responsibility of the author or of any other collaborator"
-Write-Host -BackgroundColor Red -ForegroundColor White "Use it at your own networks and/or with the network owner's explicit permission"
-
-Write-Host -ForegroundColor red  "Indicates special privilege over an object or misconfiguration"
-Write-Host -ForegroundColor green  "Indicates protection is enabled or something is well configured"
-Write-Host -ForegroundColor cyan  "Indicates active users"
-Write-Host -ForegroundColor Gray  "Indicates disabled users"
-Write-Host -ForegroundColor yellow  "Indicates links"
-Write-Host -ForegroundColor Blue "Indicates title"
+Write-Host -BackgroundColor Red -ForegroundColor White  " hehe it works >:D "
 
 Write-Host ""
 if ($TimeStamp) { TimeElapsed }
