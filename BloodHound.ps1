@@ -1,4 +1,4 @@
-#Congrats for catching this, this script was ran as part of a penetration test/red team/purple team/controls test.
+#Congrats for catching this, this script was ran as part of a penetration test/red team/purple team/controls test/Please reach out to the appropriate contact to dicuss.
 function Invoke-Sniff
 {
     [CmdletBinding(PositionalBinding = $false)]
